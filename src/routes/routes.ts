@@ -27,6 +27,7 @@ import ProductSetDetail from '../pages/ProductSetDetail/productSetDetail'
 import PaymentPage from '../pages/PaymentPage/paymentPage'
 import Register from '../pages/Register/register'
 import ConfirmEmail from '../pages/ConfirmEmail/confirmEmail'
+import ManagerAllSessionPage from '../pages/Auction/ManagerAllSesstion'
 
 const routes: LayoutRoute[] = [
   {
@@ -167,6 +168,11 @@ const routes: LayoutRoute[] = [
       {
         path: '/manager/approval',
         component: ManagerApprovalPage,
+        exact: true,
+      },
+      {
+        path: '/manager/sessions',
+        component: ManagerAllSessionPage,
         exact: true,
       },
       {

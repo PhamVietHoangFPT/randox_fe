@@ -23,6 +23,7 @@ const ManagerLayout: React.FC = () => {
       path: '/manager/spinwheel-history',
     },
     { icon: '🧿', label: 'Auction Approval', path: '/manager/approval' },
+    { icon: '🧿', label: 'Auction Sessions', path: '/manager/sessions' },
     {
       icon: '📦',
       label: 'Auction Shipping',
