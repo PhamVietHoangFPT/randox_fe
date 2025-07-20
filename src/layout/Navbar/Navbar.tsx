@@ -1,20 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   Input,
   Typography,
   Flex,
   Space,
   Divider,
-  Spin,
-  Drawer,
   Button,
 } from 'antd'
 import {
   SearchOutlined,
   ShoppingOutlined,
   UserOutlined,
-  MenuOutlined,
-  LoadingOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons'
 import './Navbar.css'
 import Cookies from 'js-cookie'
@@ -22,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import type { Wallet } from '../../types/wallet'
 import { useGetWalletBalanceQuery } from '../../features/wallet/walletAPI'
 
-const { Link, Text } = Typography
+const { Link } = Typography
 
 interface WalletBalanceResponse {
   data: {
@@ -37,12 +34,10 @@ const Navbar: React.FC = () => {
     ? JSON.parse(Cookies.get('userData') as string)
     : null
 
-  const { data, isLoading } = useGetWalletBalanceQuery<WalletBalanceResponse>(
+  const { data } = useGetWalletBalanceQuery<WalletBalanceResponse>(
     {}
   )
   const balance = data?.data?.balance
-
-  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleLogout = () => {
     Cookies.remove('userData')
@@ -163,74 +158,17 @@ const Navbar: React.FC = () => {
                   <span style={{ fontWeight: 500 }}>
                     {balance?.toLocaleString()}₫
                   </span>
+                  <span style={{ fontWeight: 500 }}>
+                    <Button>
+                      <PlusCircleOutlined />
+                    </Button>
+                  </span>
                 </Flex>
               )}
-              {/* Hamburger icon for mobile */}
-              <Button
-                type='text'
-                icon={<MenuOutlined />}
-                className='mobile-menu-button'
-                onClick={() => setMobileOpen(true)}
-              />
             </Space>
           </Flex>
         </Flex>
       </div>
-
-      {/* Mobile Drawer */}
-      <Drawer
-        title={
-          <Link href='/' className='logo-link'>
-            <img
-              src='/Logo.png'
-              alt='Logo'
-              className='logo-image'
-              style={{ width: 100 }}
-            />
-          </Link>
-        }
-        placement='right'
-        onClose={() => setMobileOpen(false)}
-        open={mobileOpen}
-      >
-        <Space direction='vertical' size='middle' style={{ width: '100%' }}>
-          {NavLinks}
-          <Divider />
-          {TopBarLinks}
-          <Divider />
-          <Input
-            placeholder='Tìm kiếm'
-            suffix={<SearchOutlined />}
-            style={{ width: '100%' }}
-          />
-          <Link href='/cart' className='nav-icon-link'>
-            <ShoppingOutlined className='nav-icon' />
-          </Link>
-          {userData && (
-            <Flex align='center' gap={8}>
-              <UserOutlined className='nav-icon' />
-              {isLoading ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100vh',
-                  }}
-                >
-                  <Spin
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 48 }} spin />
-                    }
-                  />
-                </div>
-              ) : (
-                <Text strong>{balance?.toLocaleString()}₫</Text>
-              )}
-            </Flex>
-          )}
-        </Space>
-      </Drawer>
     </header>
   )
 }

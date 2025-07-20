@@ -49,8 +49,8 @@ const Homepage: React.FC = () => {
       >
         <div style={{ marginBottom: '48px' }}>
           <Content
-            title='CÁC SẢN PHẨM'
-            btnContent='Xem thêm'
+            title='OTHER PRODUCTS'
+            btnContent=''
             linkURL='/sessions'
           />
           {isLoading ? (
@@ -69,9 +69,9 @@ const Homepage: React.FC = () => {
         </div>
         <div style={{ marginBottom: '48px' }}>
           <Content
-            title='CÁC PHIÊN ĐẤU GIÁ'
-            btnContent='Xem thêm'
-            linkURL='/sessions'
+            title='ACTIVE AUCTIONS'
+            btnContent=''
+            linkURL='/'
           />
           {isAuctionLoading ? (
             <LoadingOutlined
