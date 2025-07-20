@@ -48,6 +48,14 @@ export const auctionAPI = apiSlice.injectEndpoints({
     // getActiveSessions: builder.query<any[], void>({
     //   query: () => '/AuctionSession/active',
     // }),
+    getAllSessions: builder.query({
+      query: () => ({
+        url: '/AuctionSession',
+        method: 'GET',
+      }),
+      transformResponse: (res) => res,
+      providesTags: ['auctions'],
+    }),
     getActiveSessions: builder.query({
       query: () => ({
         url: '/AuctionSession/active',
@@ -116,4 +124,5 @@ export const {
   useConfirmDeliveryCompleteMutation,
   useGetWonAuctionsQuery,
   useGetShippingInfoQuery,
+  useGetAllSessionsQuery
 } = auctionAPI

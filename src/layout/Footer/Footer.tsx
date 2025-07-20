@@ -1,8 +1,8 @@
-import React from 'react'
-import { Layout, Row, Col, Typography } from 'antd'
+import React from 'react';
+import { Layout, Row, Col, Typography } from 'antd';
 
-const { Footer } = Layout
-const { Title, Text } = Typography
+const { Footer } = Layout;
+const { Title, Text } = Typography;
 
 const AppFooter: React.FC = () => {
   return (
@@ -14,7 +14,7 @@ const AppFooter: React.FC = () => {
       }}
     >
       <Row justify='space-between' gutter={[32, 32]}>
-        {/* Cột 1: Logo + liên hệ */}
+        {/* Column 1: Logo + Contact */}
         <Col xs={24} md={6}>
           <img src='/Logo.png' alt='RandoX' height={50} />
           <div style={{ marginTop: 16 }}>
@@ -29,42 +29,42 @@ const AppFooter: React.FC = () => {
           </div>
         </Col>
 
-        {/* Cột 2: Chính sách */}
+        {/* Column 2: Policies */}
         <Col xs={24} md={6}>
           <Title level={4} style={{ color: 'white' }}>
-            Chính sách
+            Policies
           </Title>
           <ul style={{ listStyle: 'none', padding: 0, color: 'white' }}>
-            <li>Chính sách bảo mật</li>
-            <li>Chính sách vận chuyển</li>
-            <li>Chính sách đổi trả</li>
+            <li>Privacy Policy</li>
+            <li>Shipping Policy</li>
+            <li>Return Policy</li>
           </ul>
         </Col>
 
-        {/* Cột 3: Quy chế */}
+        {/* Column 3: Regulations */}
         <Col xs={24} md={6}>
           <Title level={4} style={{ color: 'white' }}>
-            Quy chế hoạt động
+            Operating Regulations
           </Title>
           <ul style={{ listStyle: 'none', padding: 0, color: 'white' }}>
-            <li>Hướng dẫn giao hàng</li>
-            <li>Hướng dẫn thanh toán</li>
-            <li>Hướng dẫn đấu giá</li>
-            <li>Điều khoản dịch vụ</li>
+            <li>Delivery Guide</li>
+            <li>Payment Guide</li>
+            <li>Auction Guide</li>
+            <li>Terms of Service</li>
           </ul>
         </Col>
 
-        {/* Cột 4: Thanh toán + vận chuyển */}
+        {/* Column 4: Payment + Shipping */}
         <Col xs={24} md={6}>
           <Title level={4} style={{ color: 'white' }}>
-            Thanh toán
+            Payment
           </Title>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <img src='/src/assets/vnpay.jpg' alt='vnpay' height={30} />
             <img src='/src/assets/cash.jpg' alt='cash' height={30} />
           </div>
           <Title level={4} style={{ color: 'white', marginTop: 20 }}>
-            Đơn vị vận chuyển
+            Shipping Providers
           </Title>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <img src='/src/assets/spx.png' alt='spx' height={30} />
@@ -74,7 +74,7 @@ const AppFooter: React.FC = () => {
         </Col>
       </Row>
     </Footer>
-  )
-}
+  );
+};
 
-export default AppFooter
+export default AppFooter;
