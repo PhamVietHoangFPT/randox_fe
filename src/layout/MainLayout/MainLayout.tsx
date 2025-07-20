@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 import Navbar from '../Navbar/Navbar'
 import AppFooter from '../Footer/Footer'
 import CustomHeader from '../Header/Header'
-import './MainLayout.css'
+import './mainLayout.css'
 function MainLayout() {
   const navigate = useNavigate()
 
