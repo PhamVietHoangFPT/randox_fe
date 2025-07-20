@@ -28,7 +28,6 @@ const Homepage: React.FC = () => {
   const { data: auctionData, isLoading: isAuctionLoading } = useGetActiveSessionsQuery<AuctionListResponse>({})
   const productList = data?.data?.items || null
   const auctions = auctionData || null
-  console.log(auctions)
   return (
     <div
       style={{

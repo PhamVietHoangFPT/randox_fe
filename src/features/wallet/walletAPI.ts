@@ -11,7 +11,15 @@ export const walletAPI = apiSlice.injectEndpoints({
       transformResponse: (res) => res,
       providesTags: ['wallets'],
     }),
+    depositWallet: builder.mutation({
+      query: ({ totalAmount }) => ({
+        url: `/Wallet/deposit-order?totalAmount=${totalAmount}`,
+        method: 'POST',
+      }),
+      transformResponse: (res) => res,
+      invalidatesTags: ['wallets'],
+    }),
   }),
 })
 
-export const { useGetWalletBalanceQuery } = walletAPI
+export const { useGetWalletBalanceQuery, useDepositWalletMutation } = walletAPI
