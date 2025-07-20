@@ -86,7 +86,7 @@ const ProductsCardSlider: React.FC<ProductCardSliderProps> = ({ products }) => {
                         'https://prod-eurasian-res.popmart.com/default/20250226_144937_405917____1_____1200x1200.jpg'
                       }
                       alt={product.productName}
-                      style={{ maxWidth: '100%', height: 'auto' }}
+                      style={{ maxWidth: '100%', height: '250px' }}
                     />
                   </div>
                 }

@@ -5,22 +5,24 @@ import {
   Flex,
   Space,
   Divider,
-  Spin,
-  Drawer,
   Button,
+  Modal,
+  InputNumber,
+  message,
+  Form,
 } from 'antd'
 import {
   SearchOutlined,
   ShoppingOutlined,
   UserOutlined,
-  MenuOutlined,
-  LoadingOutlined,
+  PlusCircleOutlined,
 } from '@ant-design/icons'
 import './Navbar.css'
 import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import type { Wallet } from '../../types/wallet'
-import { useGetWalletBalanceQuery } from '../../features/wallet/walletAPI'
+import { useDepositWalletMutation, useGetWalletBalanceQuery } from '../../features/wallet/walletAPI'
+import { useCreatePaymentMutation } from '../../features/payment/paymentAPI'
 
 const { Link, Text } = Typography
 
@@ -37,34 +39,41 @@ const Navbar: React.FC = () => {
     ? JSON.parse(Cookies.get('userData') as string)
     : null
 
-  const { data, isLoading } = useGetWalletBalanceQuery<WalletBalanceResponse>(
+  const { data } = useGetWalletBalanceQuery<WalletBalanceResponse>(
     {}
   )
   const balance = data?.data?.balance
-
-  const [mobileOpen, setMobileOpen] = useState(false)
-
+  const [addAmount] = useDepositWalletMutation()
+  const [payment] = useCreatePaymentMutation()
   const handleLogout = () => {
     Cookies.remove('userData')
     Cookies.remove('userToken')
     navigate('/login')
   }
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [number, setNumber] = useState<number | null>(null);
 
-  // if (isLoading) {
-  //   return (
-  //     <div
-  //       style={{
-  //         display: 'flex',
-  //         justifyContent: 'center',
-  //         alignItems: 'center',
-  //         height: '100vh',
-  //       }}
-  //     >
-  //       <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
-  //     </div>
-  //   )
-  // }
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
 
+  const handleOk = async () => {
+    console.log("Input number:", number);
+    try {
+      const response = await addAmount({ totalAmount: number }).unwrap()
+      setIsModalOpen(false)
+      message.success(response.message)
+      const orderId = response.data.id
+      const PaymentRes = await payment({ orderId }).unwrap()
+      window.open(PaymentRes.paymentUrl, '_blank');
+    } catch (error) {
+      message.error("Failed to deposit wallet")
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   const NavLinks = (
     <>
       <Link href='#' className='main-nav-link'>
@@ -163,74 +172,64 @@ const Navbar: React.FC = () => {
                   <span style={{ fontWeight: 500 }}>
                     {balance?.toLocaleString()}₫
                   </span>
+                  <span style={{ fontWeight: 500 }}>
+                    <Button
+                      onClick={showModal}>
+                      <PlusCircleOutlined />
+                    </Button>
+                    <Modal
+                      title="Deposit Wallet"
+                      open={isModalOpen}
+                      onOk={handleOk}
+                      onCancel={handleCancel}
+                      okText="Confirm"
+                      cancelText="Cancel"
+                      centered
+                      width={300} // để modal nhỏ
+                      okButtonProps={{ disabled: number !== null && number < 50000 }}
+                    >
+                      <Form
+                        name="depositForm"
+                        initialValues={{ amount: number }}
+                        onValuesChange={(changedValues) => {
+                          if (changedValues.amount) {
+                            setNumber(changedValues.amount);
+                          }
+                        }}
+                      >
+                        <Form.Item
+                          name="amount"
+                          rules={[
+                            {
+                              required: true,
+                              message: 'Please input the amount!',
+                            },
+                            {
+                              type: 'number',
+                              min: 50000,
+                              message: 'Amount must be at least 50,000₫!',
+                            },
+                          ]}
+                        >
+                          <InputNumber
+                            style={{ width: '100%' }}
+                            placeholder="Enter amount"
+                            value={number ?? undefined}
+                          />
+                        </Form.Item>
+                      </Form>
+                      <Text type="secondary" style={{ marginTop: 8, display: "block" }}>
+                        Minimum amount is 50,000₫
+                      </Text>
+
+                    </Modal>
+                  </span>
                 </Flex>
               )}
-              {/* Hamburger icon for mobile */}
-              <Button
-                type='text'
-                icon={<MenuOutlined />}
-                className='mobile-menu-button'
-                onClick={() => setMobileOpen(true)}
-              />
             </Space>
           </Flex>
         </Flex>
       </div>
-
-      {/* Mobile Drawer */}
-      <Drawer
-        title={
-          <Link href='/' className='logo-link'>
-            <img
-              src='/Logo.png'
-              alt='Logo'
-              className='logo-image'
-              style={{ width: 100 }}
-            />
-          </Link>
-        }
-        placement='right'
-        onClose={() => setMobileOpen(false)}
-        open={mobileOpen}
-      >
-        <Space direction='vertical' size='middle' style={{ width: '100%' }}>
-          {NavLinks}
-          <Divider />
-          {TopBarLinks}
-          <Divider />
-          <Input
-            placeholder='Tìm kiếm'
-            suffix={<SearchOutlined />}
-            style={{ width: '100%' }}
-          />
-          <Link href='/cart' className='nav-icon-link'>
-            <ShoppingOutlined className='nav-icon' />
-          </Link>
-          {userData && (
-            <Flex align='center' gap={8}>
-              <UserOutlined className='nav-icon' />
-              {isLoading ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100vh',
-                  }}
-                >
-                  <Spin
-                    indicator={
-                      <LoadingOutlined style={{ fontSize: 48 }} spin />
-                    }
-                  />
-                </div>
-              ) : (
-                <Text strong>{balance?.toLocaleString()}₫</Text>
-              )}
-            </Flex>
-          )}
-        </Space>
-      </Drawer>
     </header>
   )
 }

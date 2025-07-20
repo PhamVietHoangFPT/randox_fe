@@ -29,7 +29,9 @@ const AuctionSlider: React.FC<AuctionCardSliderProps> = ({ auctions }) => {
 
   return (
     <div style={{ padding: '16px' }}>
-      <Carousel autoplay dots>
+      <Carousel autoplay dots
+        slidesToShow={Math.min(auctions.length, 3)}
+      >
         {auctions.map((auction) => (
           <div key={auction.id}>
             <Card
@@ -57,7 +59,7 @@ const AuctionSlider: React.FC<AuctionCardSliderProps> = ({ auctions }) => {
                     <img
                       src={auction?.auctionItem?.imageUrl}
                       alt={auction?.auctionItem?.name}
-                      style={{ maxWidth: '100%', height: 'auto' }}
+                      style={{ maxWidth: '100%', height: '250px' }}
                     />
                   </div>
                 }

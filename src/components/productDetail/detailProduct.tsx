@@ -112,16 +112,16 @@ const DetailProduct: React.FC = () => {
   const children = (
     <div>
       <p style={{ fontWeight: 'lighter', fontStyle: 'oblique' }}>
-        Bộ sưu tập: {product.categoryName}
+        Collection: {product.categoryName}
       </p>
       <p style={{ fontWeight: 'lighter', fontStyle: 'oblique' }}>
-        Mô tả: {product.description}
+        Description: {product.description}
       </p>
       <p style={{ fontWeight: 'lighter', fontStyle: 'oblique' }}>
-        Nhà phát hành: {product.manufacturerName}
+        Publisher: {product.manufacturerName}
       </p>
       <p style={{ color: '#F57F17' }}>
-        Giảm giá: {product.discountValue * 100}%
+        Discount: {product.discountValue * 100}%
       </p>
     </div>
   )
@@ -206,12 +206,12 @@ const DetailProduct: React.FC = () => {
   const items: CollapseProps['items'] = [
     {
       key: '1',
-      label: 'Chi tiêt',
+      label: 'DETAILS',
       children: <>{children}</>,
     },
     {
       key: '2',
-      label: 'Vận chuyển & Dịch vụ chăm sóc khách hàng',
+      label: 'SHIPPING & AFTER - SALES SERVICE',
       children: <>{shipping}</>,
     },
   ]
@@ -322,34 +322,65 @@ const DetailProduct: React.FC = () => {
                 />
                 Single Box
               </Button>
-              <Button
-                type='default'
-                onClick={() => {
-                  if (!product.isDeleted) {
-                    console.log(
-                      `Selected Whole Set for productSetId: ${product.productSetId}`
-                    )
-                    // Thêm logic xử lý cho Whole Set (ví dụ: navigate hoặc gọi API)
-                    navigate(`/productSet/${product.productSetId}`)
-                  }
-                }}
-                disabled={product.isDeleted}
-              >
-                <img
-                  src={
-                    product?.imageUrl ||
-                    'https://prod-eurasian-res.popmart.com/default/20250226_144937_405917____1_____1200x1200.jpg'
-                  }
-                  alt='Whole Set'
-                  style={{
-                    width: '20px',
-                    marginRight: '8px',
-                    objectFit: 'cover',
-                    borderRadius: '10px',
+              {product.productSetId ? (
+                <Button
+                  type='default'
+                  onClick={() => {
+                    if (!product.isDeleted) {
+                      console.log(
+                        `Selected Whole Set for productSetId: ${product.productSetId}`
+                      )
+                      // Thêm logic xử lý cho Whole Set (ví dụ: navigate hoặc gọi API)
+                      navigate(`/productSet/${product.productSetId}`)
+                    }
                   }}
-                />
-                Whole Set
-              </Button>
+                  disabled={product.isDeleted}
+                >
+                  <img
+                    src={
+                      product?.imageUrl ||
+                      'https://prod-eurasian-res.popmart.com/default/20250226_144937_405917____1_____1200x1200.jpg'
+                    }
+                    alt='Whole Set'
+                    style={{
+                      width: '20px',
+                      marginRight: '8px',
+                      objectFit: 'cover',
+                      borderRadius: '10px',
+                    }}
+                  />
+                  Whole Set
+                </Button>
+              ) : (
+                <Button
+                  type='default'
+                  onClick={() => {
+                    if (!product.isDeleted) {
+                      console.log(
+                        `Selected Whole Set for productSetId: ${product.productSetId}`
+                      )
+                      // Thêm logic xử lý cho Whole Set (ví dụ: navigate hoặc gọi API)
+                      navigate(`/productSet/${product.productSetId}`)
+                    }
+                  }}
+                  disabled
+                >
+                  <img
+                    src={
+                      product?.imageUrl ||
+                      'https://prod-eurasian-res.popmart.com/default/20250226_144937_405917____1_____1200x1200.jpg'
+                    }
+                    alt='Whole Set'
+                    style={{
+                      width: '20px',
+                      marginRight: '8px',
+                      objectFit: 'cover',
+                      borderRadius: '10px',
+                    }}
+                  />
+                  Whole Set
+                </Button>
+              )}
             </div>
             <div className='details-section'>
               <Collapse
@@ -361,7 +392,7 @@ const DetailProduct: React.FC = () => {
             </div>
           </div>
         </div>
-        <Content title='CÁC SẢN PHẨM' btnContent='Xem thêm' linkURL='/sessions' />
+        <Content title='OTHER PRODUCTS' btnContent='' linkURL='/' />
         {
           isProductListLoading ? (
             <div
