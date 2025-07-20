@@ -112,16 +112,16 @@ const DetailProduct: React.FC = () => {
   const children = (
     <div>
       <p style={{ fontWeight: 'lighter', fontStyle: 'oblique' }}>
-        Bộ sưu tập: {product.categoryName}
+        Collection: {product.categoryName}
       </p>
       <p style={{ fontWeight: 'lighter', fontStyle: 'oblique' }}>
-        Mô tả: {product.description}
+        Description: {product.description}
       </p>
       <p style={{ fontWeight: 'lighter', fontStyle: 'oblique' }}>
-        Nhà phát hành: {product.manufacturerName}
+        Publisher: {product.manufacturerName}
       </p>
       <p style={{ color: '#F57F17' }}>
-        Giảm giá: {product.discountValue * 100}%
+        Discount: {product.discountValue * 100}%
       </p>
     </div>
   )
@@ -206,12 +206,12 @@ const DetailProduct: React.FC = () => {
   const items: CollapseProps['items'] = [
     {
       key: '1',
-      label: 'Chi tiêt',
+      label: 'DETAILS',
       children: <>{children}</>,
     },
     {
       key: '2',
-      label: 'Vận chuyển & Dịch vụ chăm sóc khách hàng',
+      label: 'SHIPPING & AFTER - SALES SERVICE',
       children: <>{shipping}</>,
     },
   ]
@@ -361,7 +361,7 @@ const DetailProduct: React.FC = () => {
             </div>
           </div>
         </div>
-        <Content title='CÁC SẢN PHẨM' btnContent='Xem thêm' linkURL='/sessions' />
+        <Content title='OTHER PRODUCTS' btnContent='' linkURL='/sessions' />
         {
           isProductListLoading ? (
             <div
