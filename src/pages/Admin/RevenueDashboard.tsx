@@ -90,6 +90,22 @@ const RevenueDashboard: React.FC = () => {
             <Statistic title='Total Orders' value={summary?.totalOrders || 0} />
           </Card>
         </Col>
+        <Col span={6}>
+          <Card className='summary-card green'>
+            <Statistic
+              title='Total Users'
+              value={summary?.totalUsers || 0}
+            />
+          </Card>
+        </Col>
+        <Col span={6}>
+          <Card className='summary-card orange'>
+            <Statistic
+              title='Total Products Sold'
+              value={summary?.totalProductsSold || 0}
+            />
+          </Card>
+        </Col>
       </Row>
 
       <Divider />
