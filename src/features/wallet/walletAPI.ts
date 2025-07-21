@@ -19,7 +19,15 @@ export const walletAPI = apiSlice.injectEndpoints({
       transformResponse: (res) => res,
       invalidatesTags: ['wallets'],
     }),
+    transactionHistory: builder.query({
+      query: () => ({
+        url: '/Transaction',
+        method: 'GET',
+      }),
+      transformResponse: (res) => res,
+      providesTags: ['transactions'],
+    }),
   }),
 })
 
-export const { useGetWalletBalanceQuery, useDepositWalletMutation } = walletAPI
+export const { useGetWalletBalanceQuery, useDepositWalletMutation, useTransactionHistoryQuery } = walletAPI

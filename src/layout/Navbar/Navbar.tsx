@@ -118,7 +118,9 @@ const Navbar: React.FC = () => {
               </Link>
               {userData && (
                 <Flex align='center' gap={8}>
-                  <UserOutlined className='nav-icon' />
+                  <Link href='/transaction-history' className='nav-icon-link'>
+                    <UserOutlined className='nav-icon' />
+                  </Link>
                   <span style={{ fontWeight: 500 }}>
                     {balance?.toLocaleString()}₫
                   </span>
