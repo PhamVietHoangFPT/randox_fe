@@ -10,10 +10,10 @@ export const LoginForm = () => {
   const navigate = useNavigate()
 
   const validateInput = (value: string) => {
-    if (!value) return Promise.reject('Vui lòng nhập email!')
+    if (!value) return Promise.reject('Please enter your email!')
     if (/^\d{10}$/.test(value)) return Promise.resolve()
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return Promise.resolve()
-    return Promise.reject('Email không hợp lệ!')
+    return Promise.reject('Invalid email format!')
   }
 
   const handleSubmit = async (values: { email?: string; password: string }) => {
@@ -30,14 +30,14 @@ export const LoginForm = () => {
         navigate('/')
       } else {
         notification.error({
-          message: 'Lỗi phản hồi',
-          description: 'Không tìm thấy accessToken trong phản hồi từ server.',
+          message: 'Response Error',
+          description: 'Access token not found in server response.',
         })
       }
     } catch (error: any) {
       notification.error({
-        message: 'Đăng nhập thất bại',
-        description: error?.data?.message || 'Đã xảy ra lỗi không xác định',
+        message: 'Login Failed',
+        description: error?.data?.message || 'An unknown error occurred.',
       })
     }
   }
@@ -71,10 +71,10 @@ export const LoginForm = () => {
 
       <Form.Item
         name='password'
-        rules={[{ required: true, message: 'Vui lòng nhập mật khẩu' }]}
+        rules={[{ required: true, message: 'Please enter your password!' }]}
       >
         <Input.Password
-          placeholder='Mật khẩu'
+          placeholder='Password'
           style={{
             height: '65px',
           }}
@@ -105,7 +105,7 @@ export const LoginForm = () => {
                 fontSize: '16px',
               }}
             >
-              Đăng nhập
+              Log in
             </div>
           </Button>
           <Button
@@ -118,12 +118,12 @@ export const LoginForm = () => {
                 color: '#000',
               }}
             >
-              Bạn mới biết đến RandoX?
+              New to RandoX?
             </span>
-            <span style={{ fontWeight: 'bold', color: '#000' }}>Đăng ký</span>
+            <span style={{ fontWeight: 'bold', color: '#000' }}> Register</span>
           </Button>
         </div>
       </Form.Item>
     </Form>
   )
-}
+} 

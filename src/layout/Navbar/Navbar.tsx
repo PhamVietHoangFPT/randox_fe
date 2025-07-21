@@ -76,17 +76,11 @@ const Navbar: React.FC = () => {
   };
   const NavLinks = (
     <>
-      <Link href='#' className='main-nav-link'>
-        Blind box
-      </Link>
       <Link href='/RandomWheel' className='main-nav-link'>
         Lucky Draws
       </Link>
       <Link href='/sessions' className='main-nav-link'>
         Autions
-      </Link>
-      <Link href='#' className='main-nav-link'>
-        Livestream
       </Link>
     </>
   )
