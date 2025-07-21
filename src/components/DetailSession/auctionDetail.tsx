@@ -52,11 +52,9 @@ const DetailSession: React.FC = () => {
   const [isExpired, setIsExpired] = useState(false)
   const [endTime, setEndTime] = useState<number | null>(null)
 
-  // State for pagination
   const [currentPage, setCurrentPage] = useState(1)
-  const [pageSize] = useState(5) // You can change this to control how many bids per page
+  const [pageSize] = useState(5)
 
-  // Form state
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -65,7 +63,6 @@ const DetailSession: React.FC = () => {
     }
   }, [data])
 
-  // ✅ Kết nối SignalR
   useEffect(() => {
     if (!sessionId || sessionId === 'undefined') return
 
@@ -75,16 +72,16 @@ const DetailSession: React.FC = () => {
         const extended = new Date(newEndTime).getTime()
         setEndTime(extended)
         api.info({
-          message: 'Gia hạn phiên thêm 5 phút',
+          message: 'Session extended by 5 minutes',
         })
       },
       (error: any) => {
         api.error({
-          message: 'Lỗi kết nối phiên đấu giá',
-          description: error?.message || 'Đã xảy ra lỗi khi kết nối.',
+          message: 'Auction connection error',
+          description: error?.message || 'An error occurred while connecting.',
         })
       },
-      () => {} // Add an empty callback or appropriate handler as the fourth argument
+      () => { }
     )
 
     return () => {
@@ -94,7 +91,7 @@ const DetailSession: React.FC = () => {
 
   const openNotification = (type: 'success' | 'error', message: string) => {
     api[type]({
-      message: type === 'success' ? 'Thành công' : 'Lỗi',
+      message: type === 'success' ? 'Success' : 'Error',
       description: message,
       duration: 3,
       placement: 'topRight',
@@ -107,21 +104,19 @@ const DetailSession: React.FC = () => {
         sessionId: sessionId!,
         amount: values.bidPrice,
       }).unwrap()
-      openNotification('success', 'Đặt giá thành công!')
+      openNotification('success', 'Bid placed successfully!')
 
-      // Reset form fields after successful bid
       form.resetFields()
-
       refetch()
     } catch (err: any) {
-      openNotification('error', err?.data || 'Đặt giá thất bại!')
+      openNotification('error', err?.data || 'Failed to place bid!')
     }
   }
 
   if (isLoading)
-    return <div className='loading-container'>Đang tải phiên đấu giá...</div>
+    return <div className='loading-container'>Loading auction session...</div>
   if (error || !data?.session)
-    return <div className='error-container'>Không tìm thấy phiên đấu giá.</div>
+    return <div className='error-container'>Auction session not found.</div>
 
   const session = data.session
   const item = session.auctionItem
@@ -136,7 +131,6 @@ const DetailSession: React.FC = () => {
     bids.length > 0 ? Math.max(...bids.map((b) => b.amount)) : null
   const stepPrice = data?.session?.auctionItem?.stepPrice || null
 
-  // Handle pagination
   const paginatedBids = bids.slice(
     (currentPage - 1) * pageSize,
     currentPage * pageSize
@@ -159,7 +153,7 @@ const DetailSession: React.FC = () => {
               <div className='item-image-container'>
                 <img
                   src={item?.imageUrl || '/no-image.png'}
-                  alt='Ảnh sản phẩm'
+                  alt='Product Image'
                   className='item-image'
                 />
                 <p>
@@ -171,23 +165,23 @@ const DetailSession: React.FC = () => {
                   <div className='price-item'>
                     <DollarOutlined className='price-icon' />
                     <span>
-                      Giá khởi điểm: <>{item?.startPrice?.toLocaleString()}đ</>
+                      Starting Price: <>{item?.startPrice?.toLocaleString()}₫</>
                     </span>
                   </div>
                   <div className='price-item'>
                     <TrophyOutlined className='price-icon' />
                     <span>
-                      Giá chốt: <>{item?.reservePrice?.toLocaleString()}đ</>
+                      Reserve Price: <>{item?.reservePrice?.toLocaleString()}₫</>
                     </span>
                   </div>
                   <div className='price-item'>
                     <span>
-                      Bước nhảy: <>{item?.stepPrice?.toLocaleString()}đ</>
+                      Step: <>{item?.stepPrice?.toLocaleString()}₫</>
                     </span>
                   </div>
                   <div className='countdown-section'>
                     <ClockCircleOutlined className='countdown-icon' />
-                    <Text className='countdown-label'>Thời gian còn lại:</Text>
+                    <Text className='countdown-label'>Time left:</Text>
                     {endTime && !isExpired ? (
                       <Countdown
                         value={endTime}
@@ -197,7 +191,7 @@ const DetailSession: React.FC = () => {
                       />
                     ) : (
                       <Tag color='red' className='expired-tag'>
-                        Phiên đấu giá đã kết thúc
+                        Auction has ended
                       </Tag>
                     )}
                   </div>
@@ -207,24 +201,24 @@ const DetailSession: React.FC = () => {
           </Card>
           <Card className='bid-form-card'>
             <Title level={3} className='bid-form-title'>
-              Đặt giá ngay
+              Place Your Bid
             </Title>
             <Form
               name='bidForm'
               onFinish={onFinish}
               layout='vertical'
               className='bid-form'
-              form={form} // Thêm form vào đây để sử dụng resetFields
+              form={form}
             >
               <Form.Item
-                label='Giá đặt (VND)'
+                label='Bid Price (VND)'
                 name='bidPrice'
                 rules={[
-                  { required: true, message: 'Nhập giá đặt!' },
+                  { required: true, message: 'Enter your bid!' },
                   {
                     type: 'number',
                     min: (highestBid ?? 0) + (stepPrice ?? 0),
-                    message: `Giá đặt phải lớn hơn hoặc bằng ${((highestBid ?? 0) + (stepPrice ?? 0)).toLocaleString()}đ`,
+                    message: `Bid must be at least ${((highestBid ?? 0) + (stepPrice ?? 0)).toLocaleString()}₫`,
                   },
                 ]}
               >
@@ -236,7 +230,7 @@ const DetailSession: React.FC = () => {
                     `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
                   }
                   parser={(value) => value!.replace(/(,*)/g, '')}
-                  placeholder='Nhập số tiền'
+                  placeholder='Enter amount'
                 />
               </Form.Item>
               <Form.Item>
@@ -247,7 +241,7 @@ const DetailSession: React.FC = () => {
                   className='bid-button'
                   size='large'
                 >
-                  Đặt giá ngay
+                  Place Bid
                 </Button>
               </Form.Item>
             </Form>
@@ -257,12 +251,12 @@ const DetailSession: React.FC = () => {
         <div className='auction-sidebar'>
           <Card className='bids-card'>
             <Title level={3} className='bids-title'>
-              Lịch sử đặt giá
+              Bid History
             </Title>
             <List
               itemLayout='horizontal'
               dataSource={paginatedBids}
-              locale={{ emptyText: 'Chưa có lượt đặt giá nào.' }}
+              locale={{ emptyText: 'No bids yet.' }}
               className='bids-list'
               renderItem={(bid) => {
                 const isHighest = bid.amount === highestBid
@@ -278,10 +272,10 @@ const DetailSession: React.FC = () => {
                       }
                       title={
                         <div className='bid-user'>
-                          {bid.user?.email || 'Người dùng ẩn danh'}
+                          {bid.user?.email || 'Anonymous'}
                           {isHighest && (
                             <Tag color='gold' className='highest-tag'>
-                              Giá cao nhất
+                              Highest Bid
                             </Tag>
                           )}
                         </div>
@@ -289,10 +283,10 @@ const DetailSession: React.FC = () => {
                       description={
                         <div className='bid-info'>
                           <div className='bid-amount'>
-                            {bid.amount.toLocaleString()} đ
+                            {bid.amount.toLocaleString()} ₫
                           </div>
                           <div className='bid-time'>
-                            {new Date(bid.createdAt).toLocaleString('vi-VN')}
+                            {new Date(bid.createdAt).toLocaleString('en-GB')}
                           </div>
                         </div>
                       }

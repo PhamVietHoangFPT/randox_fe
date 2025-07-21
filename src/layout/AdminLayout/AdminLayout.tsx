@@ -10,7 +10,6 @@ const AdminLayout: React.FC = () => {
   const menuItems = [
     { icon: '💰', label: 'Revenue Dashboard', path: '/admin/revenue' },
     { icon: '👥', label: 'User Management', path: '/admin/accounts' },
-    { icon: '⚙️', label: 'System Settings', path: '/admin/settings' },
   ]
 
   const isActive = (path: string) => location.pathname === path

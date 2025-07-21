@@ -108,7 +108,7 @@ const Navbar: React.FC = () => {
           {/* Right: Search + icons */}
           <Flex align='center' gap='large'>
             <Input
-              placeholder='Tìm kiếm'
+              placeholder='Search'
               suffix={<SearchOutlined />}
               style={{ width: 250 }}
               className='nav-search'
