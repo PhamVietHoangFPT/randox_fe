@@ -4,7 +4,6 @@ import {
   Typography,
   Flex,
   Space,
-  Divider,
   Button,
   Modal,
   InputNumber,
@@ -16,6 +15,7 @@ import {
   ShoppingOutlined,
   UserOutlined,
   PlusCircleOutlined,
+  LogoutOutlined,
 } from '@ant-design/icons'
 import './Navbar.css'
 import Cookies from 'js-cookie'
@@ -85,52 +85,8 @@ const Navbar: React.FC = () => {
     </>
   )
 
-  const TopBarLinks = (
-    <Space split={<Divider type='vertical' />}>
-      {userData ? (
-        <Link className='top-bar-link' onClick={handleLogout}>
-          Logout
-        </Link>
-      ) : (
-        <Link href='/login' className='top-bar-link'>
-          Login
-        </Link>
-      )}
-      <Link href='#' className='top-bar-link'>
-        About
-      </Link>
-      <Link href='#' className='top-bar-link'>
-        Contact
-      </Link>
-      <Link href='#' className='top-bar-link'>
-        Support
-      </Link>
-      <Link href='#' className='top-bar-link'>
-        Notification
-      </Link>
-    </Space>
-  )
-
   return (
     <header className='navbar-container'>
-      {/* === Top Bar === */}
-      <div className='top-bar'>
-        <Flex justify='space-between' align='center' wrap='wrap'>
-          {/* Left Side */}
-          <Space split={<Divider type='vertical' />}>
-            <Link href='#' className='top-bar-link'>
-              Seller Channel
-            </Link>
-            <Link href='#' className='top-bar-link'>
-              Connect
-            </Link>
-          </Space>
-
-          {/* Right Side */}
-          <div className='top-bar-links'>{TopBarLinks}</div>
-        </Flex>
-      </div>
-
       {/* === Main Nav === */}
       <div className='main-nav'>
         <Flex justify='space-between' align='center' wrap='wrap'>
@@ -170,6 +126,10 @@ const Navbar: React.FC = () => {
                     <Button
                       onClick={showModal}>
                       <PlusCircleOutlined />
+                    </Button>
+                    <Button
+                      onClick={handleLogout}>
+                      <LogoutOutlined />
                     </Button>
                     <Modal
                       title="Deposit Wallet"
