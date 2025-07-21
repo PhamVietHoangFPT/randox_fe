@@ -14,22 +14,22 @@ export const RegisterForm = () => {
       const response = await register({
         email: values.email,
         password: values.password,
-        dob: dayjs(values.dob).format('YYYY-MM-DD'), // 👈 CHUYỂN ĐỊNH DẠNG TẠI ĐÂY
+        dob: dayjs(values.dob).format('YYYY-MM-DD'),
         phoneNumber: values.phoneNumber,
         roleId: 'a1fdb0c2-0daf-4bb0-b075-a3cc0b2febeb',
         fullname: '',
       }).unwrap()
       console.log(response)
       notification.success({
-        message: 'Đăng ký thành công',
-        description: 'Vui lòng kiểm tra email để xác thực tài khoản.',
+        message: 'Registration Successful',
+        description: 'Please check your email to verify your account.',
       })
 
       navigate('/login')
     } catch (error: any) {
       notification.error({
-        message: 'Đăng ký thất bại',
-        description: error?.data?.message || 'Đã xảy ra lỗi không xác định.',
+        message: 'Registration Failed',
+        description: error?.data?.message || 'An unknown error occurred.',
       })
     }
   }
@@ -56,8 +56,8 @@ export const RegisterForm = () => {
       <Form.Item
         name='email'
         rules={[
-          { required: true, message: 'Vui lòng nhập email!' },
-          { type: 'email', message: 'Email không hợp lệ!' },
+          { required: true, message: 'Please enter your email!' },
+          { type: 'email', message: 'Invalid email format!' },
         ]}
       >
         <Input
@@ -72,12 +72,12 @@ export const RegisterForm = () => {
       <Form.Item
         name='password'
         rules={[
-          { required: true, message: 'Vui lòng nhập mật khẩu!' },
-          { min: 6, message: 'Mật khẩu ít nhất 6 ký tự!' },
+          { required: true, message: 'Please enter your password!' },
+          { min: 6, message: 'Password must be at least 6 characters!' },
         ]}
       >
         <Input.Password
-          placeholder='Mật khẩu'
+          placeholder='Password'
           style={{
             height: '65px',
           }}
@@ -89,19 +89,19 @@ export const RegisterForm = () => {
         name='retypePassword'
         dependencies={['password']}
         rules={[
-          { required: true, message: 'Vui lòng nhập lại mật khẩu!' },
+          { required: true, message: 'Please re-enter your password!' },
           ({ getFieldValue }) => ({
             validator(_, value) {
               if (!value || getFieldValue('password') === value) {
                 return Promise.resolve()
               }
-              return Promise.reject('Mật khẩu nhập lại không khớp!')
+              return Promise.reject('Passwords do not match!')
             },
           }),
         ]}
       >
         <Input.Password
-          placeholder='Nhập lại mật khẩu'
+          placeholder='Confirm Password'
           style={{
             height: '65px',
           }}
@@ -111,10 +111,10 @@ export const RegisterForm = () => {
       {/* DOB */}
       <Form.Item
         name='dob'
-        rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}
+        rules={[{ required: true, message: 'Please select your date of birth!' }]}
       >
         <DatePicker
-          placeholder='Ngày sinh'
+          placeholder='Date of Birth'
           format='YYYY-MM-DD'
           style={{
             height: '65px',
@@ -127,15 +127,15 @@ export const RegisterForm = () => {
       <Form.Item
         name='phoneNumber'
         rules={[
-          { required: true, message: 'Vui lòng nhập số điện thoại!' },
+          { required: true, message: 'Please enter your phone number!' },
           {
             pattern: /^\d{10,11}$/,
-            message: 'Số điện thoại không hợp lệ!',
+            message: 'Invalid phone number!',
           },
         ]}
       >
         <Input
-          placeholder='Số điện thoại'
+          placeholder='Phone Number'
           style={{
             height: '65px',
           }}
@@ -165,7 +165,7 @@ export const RegisterForm = () => {
                 fontSize: '16px',
               }}
             >
-              Đăng ký
+              Register
             </div>
           </Button>
           <Button
@@ -178,11 +178,11 @@ export const RegisterForm = () => {
                 color: '#000',
               }}
             >
-              Đã có tài khoản?
+              Already have an account?
             </span>
             <span style={{ fontWeight: 'bold', color: '#000' }}>
               {' '}
-              Đăng nhập
+              Log in
             </span>
           </Button>
         </div>

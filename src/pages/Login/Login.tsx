@@ -74,7 +74,7 @@ export default function Login() {
                   level={2}
                   style={{ textAlign: 'center', marginBottom: '24px' }}
                 >
-                  Đăng nhập
+                  Log in
                 </Title>
                 <LoginForm />
               </div>

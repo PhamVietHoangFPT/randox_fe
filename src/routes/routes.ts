@@ -28,6 +28,7 @@ import PaymentPage from '../pages/PaymentPage/paymentPage'
 import Register from '../pages/Register/register'
 import ConfirmEmail from '../pages/ConfirmEmail/confirmEmail'
 import ManagerAllSessionPage from '../pages/Auction/ManagerAllSesstion'
+import TransactionHistory from '../pages/TranscationHistory/transactionHistory'
 
 const routes: LayoutRoute[] = [
   {
@@ -84,6 +85,11 @@ const routes: LayoutRoute[] = [
       {
         path: '/cart',
         component: Cart,
+        exact: true,
+      },
+      {
+        path: '/transaction-history',
+        component: TransactionHistory,
         exact: true,
       },
       {
