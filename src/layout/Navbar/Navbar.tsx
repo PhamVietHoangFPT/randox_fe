@@ -16,6 +16,7 @@ import {
   UserOutlined,
   PlusCircleOutlined,
   LogoutOutlined,
+  LoginOutlined,
 } from '@ant-design/icons'
 import './Navbar.css'
 import Cookies from 'js-cookie'
@@ -116,7 +117,7 @@ const Navbar: React.FC = () => {
               <Link href='/cart' className='nav-icon-link'>
                 <ShoppingOutlined className='nav-icon' />
               </Link>
-              {userData && (
+              {userData ? (
                 <Flex align='center' gap={8}>
                   <Link href='/transaction-history' className='nav-icon-link'>
                     <UserOutlined className='nav-icon' />
@@ -181,7 +182,18 @@ const Navbar: React.FC = () => {
                     </Modal>
                   </span>
                 </Flex>
-              )}
+              ) : (<Flex align='center' gap={8}>
+                <Link href='/transaction-history' className='nav-icon-link'>
+                  <UserOutlined className='nav-icon' />
+                </Link>
+
+                <Button
+                  onClick={() => navigate('/login')}
+                  type='primary'
+                  size='middle'>
+                  <LoginOutlined /> Login
+                </Button>
+              </Flex>)}
             </Space>
           </Flex>
         </Flex>
