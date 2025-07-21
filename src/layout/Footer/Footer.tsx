@@ -60,16 +60,16 @@ const AppFooter: React.FC = () => {
             Payment
           </Title>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <img src='/src/assets/vnpay.jpg' alt='vnpay' height={30} />
-            <img src='/src/assets/cash.jpg' alt='cash' height={30} />
+            <img src='https://play-lh.googleusercontent.com/B1Zi8JrNjFjZKOQ2b5O8M-Or2uY3pSWZa-6-XnDMJ8YTFesdJRsIFhd1KxpqV0f2kg=w480-h960-rw' alt='vnpay' height={30} />
+            <img src='https://imgs.search.brave.com/rwSJ7tBCFo6m08_s9fNvcH5DEV0G_tMRV5K1U8CwyWQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4t/aWNvbnMtcG5nLmZy/ZWVwaWsuY29tLzI1/Ni8yMDIxLzIwMjE2/ODYucG5nP3NlbXQ9/YWlzX2h5YnJpZA' alt='cash' height={30} />
           </div>
           <Title level={4} style={{ color: 'white', marginTop: 20 }}>
             Shipping Providers
           </Title>
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <img src='/src/assets/spx.png' alt='spx' height={30} />
-            <img src='/src/assets/jt.png' alt='jt' height={30} />
-            <img src='/src/assets/viettel.jpg' alt='viettel' height={30} />
+            <img src='https://imgs.search.brave.com/wSyJ_3zSAV5cQ2G1YHi8K7MQ6h9h28TkzwLD8JKyUAQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/NHRyYWNraW5nLm5l/dC9saWIvaW1nL2Nh/cnJpZXJzL3Nob3Bl/ZS1leHByZXNzLnN2/Zw' alt='spx' height={30} />
+            <img src='https://imgs.search.brave.com/eTKxDTIJWU4gZ3kWHcpgi65Y5f6Fp5fqFKEANzttw4I/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4u/NHRyYWNraW5nLm5l/dC9saWIvaW1nL2Nh/cnJpZXJzL2otdC1l/eHByZXNzLnN2Zw' alt='jt' height={30} />
+            <img src='https://imgs.search.brave.com/AmeNEm1XwTQzhdzZUjfH9M81CpLMEyuwlftDoxJy2qg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9wbGF5/LWxoLmdvb2dsZXVz/ZXJjb250ZW50LmNv/bS9TdDVEMFNncWZs/aDIzMHRUcGhSeGE2/UUw3U2IweWtUSjZo/OXp2RnU4X0ZLTDBW/WkdBSnc2QUdteTRH/Q2M1alJxU0E9dzI0/MC1oNDgwLXJ3' alt='viettel' height={30} />
           </div>
         </Col>
       </Row>
