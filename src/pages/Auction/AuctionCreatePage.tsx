@@ -2,6 +2,7 @@
 import { Button, Form, Input, InputNumber, notification } from 'antd'
 import React from 'react'
 import { useSubmitAuctionItemMutation } from '../../features/auction/auctionAPI'
+
 const AuctionCreatePage: React.FC = () => {
   const [form] = Form.useForm()
   const [submitAuctionItem] = useSubmitAuctionItemMutation()
@@ -20,10 +21,10 @@ const AuctionCreatePage: React.FC = () => {
       }
 
       await submitAuctionItem(formData).unwrap()
-      notification.success({ message: 'Đã gửi vật phẩm thành công' })
+      notification.success({ message: 'Item submitted successfully' })
       form.resetFields()
     } catch {
-      notification.error({ message: 'Gửi thất bại' })
+      notification.error({ message: 'Submission failed' })
     }
   }
 
@@ -56,47 +57,47 @@ const AuctionCreatePage: React.FC = () => {
         >
           <Form.Item
             name='name'
-            label='Tên vật phẩm'
+            label='Item Name'
             rules={[{ required: true }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name='description'
-            label='Mô tả'
+            label='Description'
             rules={[{ required: true }]}
           >
             <Input.TextArea />
           </Form.Item>
           <Form.Item
             name='image'
-            label='Hình ảnh'
+            label='Image'
             valuePropName='file'
             getValueFromEvent={(e) => e?.target?.files?.[0]}
-            rules={[{ required: true, message: 'Vui lòng chọn ảnh' }]}
+            rules={[{ required: true, message: 'Please select an image' }]}
           >
             <Input type='file' accept='image/*' />
           </Form.Item>
           <Form.Item
             name='condition'
-            label='Tình trạng'
+            label='Condition'
             rules={[{ required: true }]}
           >
-            <Input placeholder='Ví dụ: Mới 100%, Đã qua sử dụng...' />
+            <Input placeholder='e.g. 100% new, Used...' />
           </Form.Item>
           <Form.Item
             name='startPrice'
-            label='Giá khởi điểm'
+            label='Starting Price'
             rules={[{ required: true }]}
           >
             <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item
             name='reservePrice'
-            label='Giá chốt'
+            label='Reserve Price'
             dependencies={['startPrice']}
             rules={[
-              { required: true, message: 'Vui lòng nhập giá chốt' },
+              { required: true, message: 'Please enter reserve price' },
               ({ getFieldValue }) => ({
                 validator(_, value) {
                   const startPrice = getFieldValue('startPrice')
@@ -105,7 +106,7 @@ const AuctionCreatePage: React.FC = () => {
                   }
                   if (value < startPrice) {
                     return Promise.reject(
-                      new Error('Giá chốt phải lớn hơn hoặc bằng giá khởi điểm')
+                      new Error('Reserve price must be greater than or equal to starting price')
                     )
                   }
                   return Promise.resolve()
@@ -118,7 +119,7 @@ const AuctionCreatePage: React.FC = () => {
 
           <Form.Item
             name='stepPrice'
-            label='Bước nhảy tối thiểu'
+            label='Minimum Bid Increment'
             rules={[{ required: true }]}
           >
             <InputNumber min={1} style={{ width: '100%' }} />
@@ -129,7 +130,7 @@ const AuctionCreatePage: React.FC = () => {
               htmlType='submit'
               className='btn-send-auction-item'
             >
-              Gửi vật phẩm
+              Submit Item
             </Button>
           </Form.Item>
         </Form>

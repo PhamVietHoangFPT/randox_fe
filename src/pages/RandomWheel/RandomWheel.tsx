@@ -1,3 +1,4 @@
+// No change in imports
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react'
 import {
@@ -76,13 +77,12 @@ export default function RandomWheel() {
 
   const handleSpinClick = async (wheel: any) => {
     if (!token) {
-      console.log(token)
-      message.warning('Vui lòng đăng nhập để quay thưởng')
+      message.warning('Please log in to spin')
       return
     }
 
     if (wheel.price === 0 && hasSpunFreeToday(wheel)) {
-      message.warning('Hôm nay bạn đã quay miễn phí rồi')
+      message.warning('You have already used your free spin today')
       return
     }
 
@@ -91,18 +91,18 @@ export default function RandomWheel() {
       setIsSpinning(true)
       const response = await spinWheelAPI(wheel.id).unwrap()
       const reward = response?.data ?? response
-      if (!reward?.rewardName) throw new Error('Không có phần thưởng trả về')
+      if (!reward?.rewardName) throw new Error('No reward returned')
       setRewardResult(reward)
     } catch (error) {
       console.error('Spin error:', error)
       setIsSpinning(false)
-      message.error('Quay không thành công')
+      message.error('Spin failed')
     }
   }
 
   const handleChangeTab = (tab: 'wheel' | 'history') => {
     if (!token) {
-      message.warning('Vui lòng đăng nhập để sử dụng tính năng này')
+      message.warning('Please log in to use this feature')
       return
     }
     setActiveTab(tab)
@@ -116,13 +116,13 @@ export default function RandomWheel() {
             className={activeTab === 'wheel' ? 'active' : ''}
             onClick={() => setActiveTab('wheel')}
           >
-            Wheel of fortune
+            Wheel of Fortune
           </span>
           <span
             className={activeTab === 'history' ? 'active' : ''}
             onClick={() => handleChangeTab('history')}
           >
-            History of the draw
+            Spin History
           </span>
         </div>
 
@@ -142,7 +142,7 @@ export default function RandomWheel() {
                       className='detail-button'
                       onClick={() => handleDetailClick(wheel.id)}
                     >
-                      Detail
+                      Details
                     </button>
                     <img
                       className='wheel-image'
@@ -153,7 +153,7 @@ export default function RandomWheel() {
                       className='random-button'
                       onClick={() => handleSpinClick(wheel)}
                     >
-                      Draw now
+                      Spin Now
                     </button>
                     {wheel.price !== 0 && (
                       <p
@@ -163,7 +163,7 @@ export default function RandomWheel() {
                           marginTop: '5px',
                         }}
                       >
-                        Price: {wheel.price.toLocaleString()} VNĐ
+                        Price: {wheel.price.toLocaleString()} VND
                       </p>
                     )}
                     {wheel.price === 0 && !alreadySpunToday && (
@@ -174,7 +174,7 @@ export default function RandomWheel() {
                           marginTop: '5px',
                         }}
                       >
-                        Lượt quay miễn phí hôm nay còn 1
+                        You have 1 free spin left today
                       </p>
                     )}
                   </div>
@@ -208,20 +208,20 @@ export default function RandomWheel() {
                     title: 'Reward Value',
                     dataIndex: 'rewardValue',
                     key: 'rewardValue',
-                    render: (val: number) => `${val.toLocaleString()} VNĐ`,
+                    render: (val: number) => `${val.toLocaleString()} VND`,
                   },
                   {
                     title: 'Price Paid',
                     dataIndex: 'pricePaid',
                     key: 'pricePaid',
-                    render: (val: number) => `${val.toLocaleString()} VNĐ`,
+                    render: (val: number) => `${val.toLocaleString()} VND`,
                   },
                   {
                     title: 'Time',
                     dataIndex: 'createdAt',
                     key: 'createdAt',
                     render: (val: string) =>
-                      new Date(val).toLocaleString('vi-VN', {
+                      new Date(val).toLocaleString('en-GB', {
                         dateStyle: 'short',
                         timeStyle: 'short',
                       }),
@@ -239,7 +239,7 @@ export default function RandomWheel() {
 
       <Modal
         open={openModal}
-        title='Wheel details'
+        title='Wheel Details'
         onCancel={() => setOpenModal(false)}
         footer={<Button onClick={() => setOpenModal(false)}>Close</Button>}
         width={700}
@@ -249,26 +249,30 @@ export default function RandomWheel() {
         ) : (
           <>
             <h3>{wheelDetail.name}</h3>
-            <p>Draw price: {wheelDetail.price.toLocaleString()} VNĐ</p>
+            <p>Spin Price: {wheelDetail.price.toLocaleString()} VND</p>
             <Table
               columns={[
                 {
-                  title: 'Reward name',
+                  title: 'Reward Name',
                   dataIndex: 'rewardName',
                   key: 'rewardName',
                 },
                 {
-                  title: 'Price value (VNĐ)',
+                  title: 'Reward Value (VND)',
                   dataIndex: 'rewardValue',
                   key: 'rewardValue',
                 },
                 {
-                  title: 'Ratio (%)',
+                  title: 'Probability (%)',
                   dataIndex: 'probability',
                   key: 'probability',
                   render: (value: number) => `${(value * 100).toFixed(2)}%`,
                 },
-                { title: 'Type', dataIndex: 'rewardType', key: 'rewardType' },
+                {
+                  title: 'Reward Type',
+                  dataIndex: 'rewardType',
+                  key: 'rewardType',
+                },
               ]}
               dataSource={wheelDetail?.items ?? []}
               pagination={false}
