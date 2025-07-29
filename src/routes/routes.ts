@@ -29,6 +29,7 @@ import Register from '../pages/Register/register'
 import ConfirmEmail from '../pages/ConfirmEmail/confirmEmail'
 import ManagerAllSessionPage from '../pages/Auction/ManagerAllSesstion'
 import TransactionHistory from '../pages/TranscationHistory/transactionHistory'
+import PaymentCancelPage from '../pages/PaymentPage/paymentCancelPage'
 
 const routes: LayoutRoute[] = [
   {
@@ -95,6 +96,11 @@ const routes: LayoutRoute[] = [
       {
         path: '/payment-success',
         component: PaymentPage,
+        exact: true,
+      },
+      {
+        path: '/payment-cancel',
+        component: PaymentCancelPage,
         exact: true,
       },
       {

@@ -92,7 +92,7 @@ const CartPage: React.FC = () => {
       console.log(orderResponse.data.id)
       const orderId = orderResponse.data.id
       const paymentResponse = await paymentUrl({ orderId }).unwrap()
-      const redirectUrl = paymentResponse.paymentUrl
+      const redirectUrl = paymentResponse.checkoutUrl
       window.open(redirectUrl, '_blank')
       message.success('Đặt hàng thành công!')
     } catch (error) {
