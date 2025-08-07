@@ -66,7 +66,8 @@ const Navbar: React.FC = () => {
       message.success(response.message)
       const orderId = response.data.id
       const PaymentRes = await payment({ orderId }).unwrap()
-      window.open(PaymentRes.paymentUrl, '_blank');
+      const paymentUrl = PaymentRes.checkoutUrl
+      window.open(paymentUrl, '_blank');
     } catch (error) {
       message.error("Failed to deposit wallet")
     }
